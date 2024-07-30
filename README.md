@@ -1,6 +1,6 @@
 # Netflix Movies and TV Shows Analysis
 
-![Imagen del Proyecto](URL_DE_LA_IMAGEN)
+![Imagen del Proyecto](/src/1.netflix.png)
 
 ## Introducción
 En este proyecto, trabajamos con el dataset de Netflix Movies and TV Shows de Kaggle. Nuestro objetivo es extraer, transformar y analizar los datos utilizando herramientas como SQL, Tableau y Python. Este README describe los procesos realizados con cada herramienta.
@@ -53,7 +53,7 @@ Para resolver estos problemas, utilizamos Python para inspeccionar y limpiar el 
         Cantidad_titulos DESC
     LIMIT 10;
     ```
-    ![Top 10 países con más títulos en Netflix](URL_DE_LA_IMAGEN)
+    ![Top 10 países con más títulos en Netflix](/src/sql1.PNG)
 
     - **Géneros más populares:**
     ```sql
@@ -69,7 +69,7 @@ Para resolver estos problemas, utilizamos Python para inspeccionar y limpiar el 
     ORDER BY 
         Cantidad_titulos DESC;
     ```
-    ![Géneros más populares](URL_DE_LA_IMAGEN)
+    ![Géneros más populares](/src/sql2.PNG)
 
     - **Cantidad de títulos lanzados por año:**
     ```sql
@@ -83,21 +83,25 @@ Para resolver estos problemas, utilizamos Python para inspeccionar y limpiar el 
     ORDER BY 
         release_year DESC;
     ```
-    ![Cantidad de títulos lanzados por año](URL_DE_LA_IMAGEN)
+    ![Cantidad de títulos lanzados por año](/src/sql3.PNG)
 
 
 ## Visualización
 
 ### Parte 2: Visualización con Tableau
 
-1. **Dashboards:**
-    - Crear un dashboard interactivo que incluya:
-        - Distribución de títulos por país.
-        - Géneros más populares.
-        - Evolución de la cantidad de títulos lanzados por año.
-    - **Instrucciones:**
-        - Importar los datos en Looker Studio/Tableau.
-        - Diseñar gráficos que sean intuitivos y útiles para el análisis.
+**Dashboards:**
+*   Creación de un dashboard interactivo que incluye:
+    * Distribución de títulos por país.
+    * Géneros más populares.
+    * Evolución de la cantidad de títulos lanzados por año.
+
+![Imagen del dashboard](/2.Dashboard.png)    
+
+**Enlace:**
+* El dashboard interactivo se puede visualizar en el siguiente enlace:
+* [Netflix Movies and TV Shows Dashboard.](https://public.tableau.com/views/NetflixMoviesandTVShows_17223540631210/ResumenEjecutivo?:language=es-ES&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
 
 ## Análisis Avanzado
 
@@ -112,3 +116,15 @@ Para resolver estos problemas, utilizamos Python para inspeccionar y limpiar el 
 
 
 ## Generación de Insights para el Negocio
+
+### Parte 4: Insights y Recomendaciones
+
+**Principales Hallazgos**
+*   Principales Países Productores de Contenido: Estados Unidos, India y Reino Unido lideran la producción.
+*   Géneros Más Populares: Drama, Comedia y Documentales son los géneros más comunes.
+*   Tendencias Temporales: Crecimiento constante en la producción de títulos, con picos en ciertos años específicos.
+
+**Recomendaciones Estratégicas**
+*   Adquisición de Contenido: Invertir en producciones locales y contenido exclusivo.
+*   Inversiones en Géneros: Enfocar en Dramas, Documentales y Series Limitadas.
+*   Expansión Geográfica: Explorar mercados emergentes y formar colaboraciones internacionales.

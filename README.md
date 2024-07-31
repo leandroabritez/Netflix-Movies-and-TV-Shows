@@ -137,7 +137,11 @@ Se realiza un análisis exploratorio, buscando identificar patrones/tendencias e
     - Se determina la distribución de la duración de los títulos (películas y series). Para dicho fin se utilizan histogramas y box plots para visualizarlos.
 2. **Análisis de Tendencias:**
     - Se identifican tendencias en el tiempo, en relación a la cantidad de títulos en función de los años. Se utilizan gráficos de línea y acumulados para visualizar la progresión en cada caso.  
+3. **Análisis Adicionales:**
+    - Se exploran diferentes aspectos de los campos y sus valores, para obtener *Insights* significativos. 
 
+
+![Imagen del world](/src/output1.png)  
 
 ## Parte 4: Generación de Insights para el Negocio
 

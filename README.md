@@ -3,22 +3,22 @@
 ![Imagen del Proyecto](/src/1.netflix.png)
 
 ## Introducción
-En este proyecto, trabajamos con el dataset de Netflix Movies and TV Shows de Kaggle. Nuestro objetivo es extraer, transformar y analizar los datos utilizando herramientas como SQL, Tableau y Python. Este README describe los procesos realizados con cada herramienta.
+En este proyecto, trabajamos con el dataset de Netflix Movies and TV Shows de Kaggle. Nuestro objetivo es extraer, transformar y analizar los datos utilizando las herramientas MySQL, Tableau y Python. Este documento describe los procesos realizados en cada etapa.
 
 ## Datos del Dataset
 - **Dataset:** [Netflix Movies and TV Shows](https://www.kaggle.com/datasets/rahulvyasm/netflix-movies-and-tv-shows)
-- **Descripción:** Este dataset contiene información sobre películas y programas de televisión disponibles en Netflix, incluyendo detalles como el tipo de contenido, título, director, reparto, país de origen, fecha de adición, año de lanzamiento, clasificación, duración, géneros y descripción.
+- **Descripción:** Este dataset contiene información sobre películas y programas de televisión disponibles en Netflix, incluyendo detalles como el tipo de contenido, título, director, reparto, país de origen, año de lanzamiento, clasificación, duración, géneros y descripción.
 
-## Problemas Iniciales y Soluciones
+## Problemas iniciales y soluciones
 
-### Problemas Iniciales
+### Inconveniente
 Al intentar cargar el archivo CSV directamente en MySQL utilizando `LOAD DATA INFILE`, encontramos varios problemas:
 - **Error de Decodificación:** El archivo contenía caracteres especiales que no podían ser decodificados correctamente con UTF-8.
-- **Comas Adicionales:** Muchas filas del archivo CSV tenían comas adicionales al final, lo que causaba un desajuste entre el número de columnas y el número de valores en algunas filas.
+- **Comas Adicionales:** El archivo CSV contenía muchas columnas comas adicionales al final, lo que causaba un desajuste entre el número de columnas y el número de valores en algunas filas.
 - **Valores Nulos:** La presencia de valores nulos en el archivo CSV generó errores durante la inserción de datos en MySQL.
 
 ### Solución Utilizando Python
-Para resolver estos problemas, utilizamos Python para inspeccionar y limpiar el archivo CSV antes de cargarlo en MySQL:
+Para resolver estos problemas, utilizamos Python para inspeccionar y limpiar el archivo CSV antes de hacer la carga en MySQL:
 - **Paso 1: Inspección del Archivo:** Utilizamos la librería `csv` para leer las primeras filas del archivo y entender la estructura y los problemas de las comas adicionales.
 - **Paso 2: Limpieza del Archivo:** Eliminamos las comas adicionales al final de cada fila y reemplazamos los valores nulos (`NaN`) por `None`.
 - **Paso 3: Verificación:** Después de limpiar el archivo, lo cargamos en un DataFrame de `pandas` para asegurar que los problemas se hubieran resuelto correctamente.
@@ -29,12 +29,12 @@ Para resolver estos problemas, utilizamos Python para inspeccionar y limpiar el 
 - **Tableau:** Para la visualización de datos.
 - **Python:** Para la análisis exploratorio de datos.
 
-## Extracción y Transformación de Datos
+## Parte 1: Extracción y Transformación de Datos
 
-### Parte 1: SQL
+### SQL
 
 1. **Conexión y Exploración Inicial:**
-    - Conectamos a una base de datos SQL (puede ser PostgreSQL, MySQL, SQLite, etc.) e importamos el dataset.
+    - Conectamos a una base de datos SQL (MySQL Workbench) e importamos el dataset.
     - Exploramos la estructura del dataset y proporcionamos una descripción de la tabla y las columnas disponibles.
 
 2. **Consultas Específicas:**
@@ -71,6 +71,29 @@ Para resolver estos problemas, utilizamos Python para inspeccionar y limpiar el 
     ```
     ![Géneros más populares](/src/sql2.PNG)
 
+    ```sql
+    SELECT
+        genre,
+        COUNT(*) AS Cantidad_titulos
+    FROM (
+        -- Descomponer los géneros en filas individuales
+            SELECT
+                TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(listed_in, ',', numbers.n), ',', -1)) AS genre
+            FROM
+                netflix
+            JOIN (
+                SELECT 1 AS n UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+                UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
+                UNION ALL SELECT 9 UNION ALL SELECT 10
+            ) numbers
+            ON CHAR_LENGTH(listed_in) - CHAR_LENGTH(REPLACE(listed_in, ',', '')) >= numbers.n - 1
+            WHERE listed_in IS NOT NULL
+        ) AS genres
+    GROUP BY genre
+    ORDER BY Cantidad_titulos DESC;
+    ```
+    ![Géneros más populares](/src/sql2_2.PNG)
+
     - **Cantidad de títulos lanzados por año:**
     ```sql
     SELECT 
@@ -86,38 +109,41 @@ Para resolver estos problemas, utilizamos Python para inspeccionar y limpiar el 
     ![Cantidad de títulos lanzados por año](/src/sql3.PNG)
 
 
-## Visualización
+## Parte 2: Visualización
 
-### Parte 2: Visualización con Tableau
+### Tableau
 
 **Dashboards:**
-*   Creación de un dashboard interactivo que incluye:
-    * Distribución de títulos por país.
-    * Géneros más populares.
-    * Evolución de la cantidad de títulos lanzados por año.
+Se elaboró un dashboard interactivo en Tableau Public que incluye:
 
-![Imagen del dashboard](/2.Dashboard.png)    
+* Distribución de títulos por país.
+* Géneros más populares.
+* Evolución de la cantidad de títulos lanzados por año.
+
+![Imagen del dashboard](/src/2.Dashboard.png)    
 
 **Enlace:**
-* El dashboard interactivo se puede visualizar en el siguiente enlace:
+* El tablero se puede visualizar en el siguiente enlace:
 * [Netflix Movies and TV Shows Dashboard.](https://public.tableau.com/views/NetflixMoviesandTVShows_17223540631210/ResumenEjecutivo?:language=es-ES&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 
-## Análisis Avanzado
+## Parte 3: Análisis Avanzado
 
-### Parte 3: Análisis Avanzado con Python
+### Python
 
-**Nota:** Puedes elegir entre Python o R para esta parte del desafío. No es necesario ambos.
+Se realiza un análisis exploratorio, buscando identificar patrones/tendencias en los datos, y se calculan las estadísticas principales de sus variables.
 
 1. **Análisis de Duración:**
-    - Determinar la distribución de la duración de los títulos (películas y series). Utilizar histogramas y box plots para visualizar la distribución.
-    - **Python:**
-      - (Aquí se detallará el código y análisis específico en Python, si se opta por esta opción.)
+    - Se determina la distribución de la duración de los títulos (películas y series). Para dicho fin se utilizan histogramas y box plots para visualizarlos.
+2. **Análisis de Tendencias:**
+    - Se identifican tendencias en el tiempo, en relación a la cantidad de títulos en función de los años. Se utilizan gráficos de línea y acumulados para visualizar la progresión en cada caso.  
 
 
-## Generación de Insights para el Negocio
+## Parte 4: Generación de Insights para el Negocio
 
-### Parte 4: Insights y Recomendaciones
+###  Documento PDF 
+
+Se elabora un resumen ejecutivo con los Insights encontrados durante el proceso de análisis, y se presentan recomendaciones en base a las conclusiones parciales obtenidas. 
 
 **Principales Hallazgos**
 *   Principales Países Productores de Contenido: Estados Unidos, India y Reino Unido lideran la producción.

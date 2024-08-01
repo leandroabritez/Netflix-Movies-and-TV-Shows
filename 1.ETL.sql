@@ -152,4 +152,9 @@ ORDER BY
     release_year DESC; -- Luego del 2021 no hay registros, a excepción de un título del 2024.
 
 -- Buscar la única serie de 2024    
-select * from netflix where release_year = 2024; -- Parasyte: The Grey    
+select * from netflix where release_year = 2024; -- Parasyte: The Grey
+
+-- Generación de tabla temporal para iterar con numbers.n
+SELECT 1 AS n UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8
+UNION ALL SELECT 9 UNION ALL SELECT 10;
